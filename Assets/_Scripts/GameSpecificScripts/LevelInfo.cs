@@ -8,7 +8,7 @@ public class LevelInfo : ScriptableObject
     public int width;
     public int height;
     [Space(10)]
-    public Vector2Int[] brickPos;
+    public List<Vector2Int> brickPos;
 
 
 }

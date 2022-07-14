@@ -53,8 +53,16 @@ public class DemoController : MonoBehaviour
 
                 if(totalBombCount == 0)
                 {
-                    //explode all
+                    gridManager.ExplodeAllBombs();
                     controlsEnabled = false;
+                }
+                else
+                {
+                    if (gridManager.WillExplodeAllBricks())
+                    {
+                        gridManager.ExplodeAllBombs();
+                        controlsEnabled = false;
+                    }
                 }
             }
         }

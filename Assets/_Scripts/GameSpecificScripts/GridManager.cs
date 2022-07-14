@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-
 
 public class GridManager : MonoBehaviour
 {
@@ -10,7 +8,8 @@ public class GridManager : MonoBehaviour
 
     private float cellSize = 1;
     private GameObject[,] grid;
-
+    private List<GameObject> levelBricks;
+    private List<Vector2Int> bombPositions;
     private LevelInfo levelInfo;
 
     #region Controls
@@ -27,12 +26,45 @@ public class GridManager : MonoBehaviour
         var cell = GetGridCell(gridPos).GetComponent<GridCell>();
         if (!cell.GetHasBomb() && !cell.GetIsBrick())
         {
+            SetLevelBricksExplode(gridPos);
             cell.AddBomb();
-            //update bomb list
+            bombPositions.Add(gridPos);
             return true;
         }
         else
             return false;
+    }
+
+    private void SetLevelBricksExplode(Vector2Int gridPos)
+    {
+        var neighbors = GetNeighborBricks(gridPos, levelInfo.brickPos);
+        foreach (var item in neighbors)
+        {
+            GetGridCell(item).willExplode = true;
+        }
+    }
+
+    public bool WillExplodeAllBricks()
+    {
+        bool temp = true;
+        foreach (var item in levelBricks)
+        {
+            if (!item.GetComponent<GridCell>().willExplode)
+                temp = false;
+        }
+        return temp;
+    }
+
+    public void ExplodeAllBombs()
+    {
+        foreach (var item in bombPositions)
+        {
+            GetGridCell(item).ExplodeBomb();
+        }
+        foreach (var item in levelBricks)
+        {
+            item.GetComponent<GridCell>().BreakBrick();
+        }
     }
 
     public int GetMinBombCount()
@@ -41,7 +73,11 @@ public class GridManager : MonoBehaviour
         // yaklaşım 2: bricklerin birbirleri ile uzaklık ilişkisine bak, eğer 1.1 > ve < 2.1 ise ilişki vardır ve 1 bomba ile patlatılabilir. -Arası doluysa ?
 
         #region 1
-        var bricks = levelInfo.brickPos.ToList();
+        List<Vector2Int> bricks = new List<Vector2Int>();
+        foreach (var item in levelInfo.brickPos)
+        {
+            bricks.Add(item);
+        }
 
         int minCount = 0;
 
@@ -71,7 +107,7 @@ public class GridManager : MonoBehaviour
                 bricks.Remove(item);
             }
 
-            //Increase min count and break if there is no brick
+            //Increase min count and break loop if there is no brick
             minCount++;
             if (bricks.Count == 0)
                 break;
@@ -167,6 +203,8 @@ public class GridManager : MonoBehaviour
     public void CreateGrid(LevelInfo _levelInfo)
     {
         levelInfo = _levelInfo;
+        levelBricks = new List<GameObject>();
+        bombPositions = new List<Vector2Int>();
         grid = new GameObject[levelInfo.width, levelInfo.height];
 
         for (int y = 0; y < levelInfo.height; y++)
@@ -183,6 +221,7 @@ public class GridManager : MonoBehaviour
         foreach (var item in levelInfo.brickPos)
         {
             grid[item.x, item.y].GetComponent<GridCell>().ActivateBrick();
+            levelBricks.Add(grid[item.x, item.y]);
         }
     }
 

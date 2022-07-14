@@ -127,6 +127,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brickSprite: {fileID: 5888305777428152716}
   bombSprite: {fileID: 5888305776739081161}
+  thickSprite: {fileID: 3941529186804389867}
+  willExplode: 0
 --- !u!1 &5888305777428152718
 GameObject:
   m_ObjectHideFlags: 0
