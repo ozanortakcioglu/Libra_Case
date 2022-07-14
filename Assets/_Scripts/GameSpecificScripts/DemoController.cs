@@ -18,15 +18,19 @@ public class DemoController : MonoBehaviour
     public void InitializeGamePlay(LevelInfo info)
     {
         gridManager.CreateGrid(info);
-        SetCameraForNewGrid(info.width);
+        SetCameraForNewGrid(info.width, info.height);
+        gridManager.GetMinBombCount();
         controlsEnabled = true;
     }
 
-    private void SetCameraForNewGrid(int size)
+    private void SetCameraForNewGrid(int width, int height)
     {
-        camera.orthographicSize = size + ((float)size / 5);
+        float max = height;
+        if (width > height)
+            max = width;
+        camera.orthographicSize = max + (max / 5);
         var pos = camera.transform.position;
-        pos.x = (float)size / 2;
+        pos.x = (float)width / 2;
         camera.transform.position = pos;
     }
 
@@ -34,12 +38,27 @@ public class DemoController : MonoBehaviour
     {
         if (!controlsEnabled)
             return;
-        
-        //comminicate with grid and fill
+        var worldPos = camera.ScreenToWorldPoint(Input.mousePosition);
+        var gridPos = gridManager.GetGridPosFromWorld(worldPos);
+        if (gridManager.isOnTheGrid(gridPos))
+        {
+            var isPlaced = gridManager.PlaceBomb(gridPos);
+            if (isPlaced)
+            {
+                //do smth
+            }
+        }
+        else
+            Debug.Log("outside of the grid");
     }
 
     public void SetControlsEnabled(bool isEnabled)
     {
         controlsEnabled = isEnabled;
+    }
+
+    private void OnDestroy()
+    {
+        TouchHandler.onTouchBegan -= TouchBegan;
     }
 }
