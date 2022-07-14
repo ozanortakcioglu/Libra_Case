@@ -23,7 +23,7 @@ public class GridManager : MonoBehaviour
 
     #region Grid General
 
-    private void CreateGrid(LevelInfo _levelInfo)
+    public void CreateGrid(LevelInfo _levelInfo)
     {
         levelInfo = _levelInfo;
         grid = new GameObject[levelInfo.width, levelInfo.height];
