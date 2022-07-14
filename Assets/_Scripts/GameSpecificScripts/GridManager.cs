@@ -41,38 +41,31 @@ public class GridManager : MonoBehaviour
         // yaklaşım 2: bricklerin birbirleri ile uzaklık ilişkisine bak, eğer 1.1 > ve < 2.1 ise ilişki vardır ve 1 bomba ile patlatılabilir. -Arası doluysa ?
 
         #region 1
-        List<int> brickCount = new List<int>();
         var bricks = levelInfo.brickPos.ToList();
 
         int minCount = 0;
 
+        //Sorun => 1010101 sonra çözelim.
+
         while (true)
         {
-            brickCount.Clear();
             //find Max
+            List<Vector2Int> maxNeighborBricks = new List<Vector2Int>();
             int max = 0;
-            Vector2Int maxPos = Vector2Int.zero;
             for (int y = 0; y < levelInfo.height; y++)
             {
                 for (int x = 0; x < levelInfo.width; x++)
                 {
-                    var neighborBricks = GetNeighborBricks(new Vector2Int(x, y), bricks);
-                    if (neighborBricks.Count > 0)
+                    maxNeighborBricks = GetNeighborBricks(new Vector2Int(x, y), bricks);                    
+                    if(maxNeighborBricks.Count > max)
                     {
-                        brickCount.Add(neighborBricks.Count);
-                    }
-                    
-                    if(neighborBricks.Count > max)
-                    {
-                        max = neighborBricks.Count;
-                        maxPos = new Vector2Int(x, y);
+                        max = maxNeighborBricks.Count;
                     }
                 }
             }
 
             //delete bricks
-            var maxNeighbors = GetNeighborBricks(maxPos, bricks);
-            foreach (var item in maxNeighbors)
+            foreach (var item in maxNeighborBricks)
             {
                 bricks.Remove(item);
             }
@@ -120,14 +113,8 @@ public class GridManager : MonoBehaviour
         //}
 
         //int minBombCount = brickCount - relatedBricks.Count;
+        //calculate related things 
 
-        //float sum = 0;
-        //for (int i = 0; i < relatedBricks.Count; i++)
-        //{
-        //    Debug.Log(relatedBricks[i]);
-        //    Debug.Log(relationCount[i]);
-        //    sum += relationCount[i];
-        //}
         #endregion
         return minCount;
     }
