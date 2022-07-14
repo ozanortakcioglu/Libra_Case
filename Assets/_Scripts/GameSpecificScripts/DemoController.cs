@@ -7,6 +7,7 @@ public class DemoController : MonoBehaviour
     private GridManager gridManager;
     private Camera camera;
     private bool controlsEnabled = false;
+    private int totalBombCount;
 
     private void Start()
     {
@@ -19,7 +20,8 @@ public class DemoController : MonoBehaviour
     {
         gridManager.CreateGrid(info);
         SetCameraForNewGrid(info.width, info.height);
-        gridManager.GetMinBombCount();
+        totalBombCount = gridManager.GetMinBombCount() + 2;
+        UIManager.Instance.SetBombCount(totalBombCount);
         controlsEnabled = true;
     }
 
@@ -38,6 +40,7 @@ public class DemoController : MonoBehaviour
     {
         if (!controlsEnabled)
             return;
+
         var worldPos = camera.ScreenToWorldPoint(Input.mousePosition);
         var gridPos = gridManager.GetGridPosFromWorld(worldPos);
         if (gridManager.isOnTheGrid(gridPos))
@@ -45,7 +48,14 @@ public class DemoController : MonoBehaviour
             var isPlaced = gridManager.PlaceBomb(gridPos);
             if (isPlaced)
             {
-                //do smth
+                totalBombCount--;
+                UIManager.Instance.SetBombCount(totalBombCount);
+
+                if(totalBombCount == 0)
+                {
+                    //explode all
+                    controlsEnabled = false;
+                }
             }
         }
         else

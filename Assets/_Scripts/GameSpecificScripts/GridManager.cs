@@ -56,10 +56,11 @@ public class GridManager : MonoBehaviour
             {
                 for (int x = 0; x < levelInfo.width; x++)
                 {
-                    maxNeighborBricks = GetNeighborBricks(new Vector2Int(x, y), bricks);                    
-                    if(maxNeighborBricks.Count > max)
+                    var temp = GetNeighborBricks(new Vector2Int(x, y), bricks);                    
+                    if(temp.Count > max)
                     {
-                        max = maxNeighborBricks.Count;
+                        max = temp.Count;
+                        maxNeighborBricks = temp;
                     }
                 }
             }

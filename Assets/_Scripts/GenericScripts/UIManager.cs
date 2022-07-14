@@ -55,9 +55,11 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         SetupLevelContentUI();
-
         OpenPanel(PanelNames.MainMenu);
     }
+
+    #region Custom Events
+
 
     private void SetupLevelContentUI()
     {
@@ -71,6 +73,14 @@ public class UIManager : MonoBehaviour
             mainManuLevels.Add(go.GetComponent<MainMenuLevelUI>());
         }
     }
+
+    public void SetBombCount(int count)
+    {
+        bombCount.text = "" + count;
+    }
+
+    #endregion
+
 
     #region On Panel Opened Actions
 
