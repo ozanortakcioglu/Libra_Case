@@ -8,6 +8,7 @@ public class DemoController : MonoBehaviour
     private Camera camera;
     private bool controlsEnabled = false;
     private int totalBombCount;
+    private int starCount;
 
     private void Start()
     {
@@ -57,9 +58,11 @@ public class DemoController : MonoBehaviour
                     gridManager.ExplodeAllBombs();
                     
                     controlsEnabled = false;
-                    //check win or lose
-                    UIManager.Instance.SetupLevelEndPanel(totalBombCount + 1);
-                    UIManager.Instance.OpenPanel(PanelNames.EndPanel, true);
+                    if (gridManager.isAllBricksExploded())
+                        starCount = 1;
+                    else
+                        starCount = 0;
+                    UIManager.Instance.OpenPanel(PanelNames.EndPanel, true, 0.5f);
                 }
                 else
                 {
@@ -67,14 +70,19 @@ public class DemoController : MonoBehaviour
                     {
                         gridManager.ExplodeAllBombs();
                         controlsEnabled = false;
-                        UIManager.Instance.SetupLevelEndPanel(totalBombCount + 1);
-                        UIManager.Instance.OpenPanel(PanelNames.EndPanel, true);
+                        starCount = totalBombCount + 1;
+                        UIManager.Instance.OpenPanel(PanelNames.EndPanel, true, 0.5f);
                     }
                 }
             }
         }
         else
             Debug.Log("outside of the grid");
+    }
+
+    public int GetLevelStarCount()
+    {
+        return starCount;
     }
 
     public void ClearLevel()

@@ -35,6 +35,17 @@ public class GridManager : MonoBehaviour
             return false;
     }
 
+    public bool isAllBricksExploded()
+    {
+        bool isAllExploded = true;
+        foreach (var item in levelBricks)
+        {
+            if (!item.GetComponent<GridCell>().willExplode)
+                isAllExploded = false;
+        }
+        return isAllExploded;
+    }
+
     private void SetLevelBricksExplode(Vector2Int gridPos)
     {
         var neighbors = GetNeighborBricks(gridPos, levelInfo.brickPos);
@@ -113,8 +124,6 @@ public class GridManager : MonoBehaviour
                 break;
 
         }
-
-        Debug.LogWarning(minCount);
 
         #endregion
         #region 2

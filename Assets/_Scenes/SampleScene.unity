@@ -1675,6 +1675,7 @@ GameObject:
   - component: {fileID: 952144658}
   - component: {fileID: 952144660}
   - component: {fileID: 952144659}
+  - component: {fileID: 952144661}
   m_Layer: 0
   m_Name: PanelBg
   m_TagString: Untagged
@@ -1742,6 +1743,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 952144657}
   m_CullTransparentMesh: 0
+--- !u!114 &952144661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952144657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5d6a5fc5e75837498f40eca3e4dcab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.5
+  ease: 27
+  loopCount: 1
+  loopType: 0
+  isRelative: 0
+  isScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  hasInit: 1
+  initScale: {x: 0, y: 0, z: 0}
+  isMove: 0
+  move: {x: 0, y: 0, z: 0}
+  isLocalMove: 0
+  isRotate: 0
+  rotate: {x: 0, y: 0, z: 0}
+  isLocalRotate: 0
 --- !u!1 &999536946
 GameObject:
   m_ObjectHideFlags: 0
@@ -2109,7 +2137,18 @@ MonoBehaviour:
     - UIPanel: {fileID: 2095191247}
       UIPanelSetup:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 1063380462}
+            m_MethodName: SetupLevelEndPanel
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   levelContentUIPrefab: {fileID: 6869212037732840887, guid: 196079f178ae3ac42935bc2249d93e3b,
     type: 3}
   scrollViewContent: {fileID: 2033599353}

@@ -91,38 +91,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void SetupLevelEndPanel(int starCount = 0)
-    {
-        for (int i = 0; i < levelEndStars.Length; i++)
-        {
-            levelEndStars[i].SetActive(true);
-            levelEndStars[i].transform.localScale = Vector3.zero;
-        }
-
-        if (starCount == 0)
-        {
-            //lose
-            levelEndHeadText.text = "GAMEOVER!";
-        }
-        else
-        {
-            levelEndHeadText.text = "CONGRATS!";
-
-            if (starCount > 3)
-                starCount = 3;
-
-            for (int i = 0; i < starCount; i++)
-            {
-                levelEndStars[i].transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack).SetDelay(0.2f * i);
-            }
-
-            var oldStarLevel = LevelsManager.Instance.GetCurrentLevelStar();
-            if(oldStarLevel < starCount)
-                LevelsManager.Instance.SetLevelStar(LevelsManager.Instance.GetCurrentActiveLevel(), starCount);
-
-        }
-    }
-
     public void SetBombCount(int count)
     {
         bombCount.text = "" + count;
@@ -156,6 +124,42 @@ public class UIManager : MonoBehaviour
         levelText.text = "Level-" + (LevelsManager.Instance.GetCurrentActiveLevel() + 1);
     }
 
+    public void SetupLevelEndPanel()
+    {
+        Debug.Log("Setting Up Level End Panel");
+
+        int starCount = FindObjectOfType<DemoController>().GetLevelStarCount();
+
+        for (int i = 0; i < levelEndStars.Length; i++)
+        {
+            levelEndStars[i].SetActive(true);
+            levelEndStars[i].transform.localScale = Vector3.zero;
+        }
+
+        if (starCount == 0)
+        {
+            //lose
+            levelEndHeadText.text = "GAMEOVER!";
+        }
+        else
+        {
+            levelEndHeadText.text = "CONGRATS!";
+
+            if (starCount > 3)
+                starCount = 3;
+
+            for (int i = 0; i < starCount; i++)
+            {
+                levelEndStars[i].transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack).SetDelay(0.2f * i);
+            }
+
+            var oldStarLevel = LevelsManager.Instance.GetCurrentLevelStar();
+            if (oldStarLevel < starCount)
+                LevelsManager.Instance.SetLevelStar(LevelsManager.Instance.GetCurrentActiveLevel(), starCount);
+
+        }
+    }
+
     #endregion
 
 
@@ -181,12 +185,7 @@ public class UIManager : MonoBehaviour
                 CloseAllPanels();
             }
 
-            panelToOpen.UIPanel.SetActive(true);
-
-            if (panelToOpen.UIPanelSetup != null)
-            {
-                panelToOpen.UIPanelSetup.Invoke();
-            }
+            OpenPanel(panelName);
 
         }
         else
@@ -197,13 +196,10 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public void OpenPanel(PanelNames[] names, bool closeOtherPanels)
+    public void OpenPanel(PanelNames[] names)
     {
-        if (closeOtherPanels)
-            CloseAllPanels();
-
         foreach (PanelNames panelName in names)
-            OpenPanel(panelName, false);
+            OpenPanel(panelName);
     }
 
     public void OpenPanel(PanelNames name, bool closeOtherPanels, float delay)
@@ -219,6 +215,11 @@ public class UIManager : MonoBehaviour
         UIPanelAndSetup panelToOpen;
         if (UIPanelsDictionary.TryGetValue(panelName, out panelToOpen))
         {
+            foreach (var item in UIPanelsDictionary[panelName].UIPanel.GetComponentsInChildren<TweenAnimation>())
+            {
+                item.Play();
+            }
+
             panelToOpen.UIPanel.SetActive(true);
             panelToOpen.UIPanelSetup?.Invoke();
         }
