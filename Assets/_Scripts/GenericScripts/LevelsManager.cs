@@ -21,10 +21,13 @@ public class LevelsManager : MonoBehaviour
         CheckAndFillLevelStars();
     }
 
-    public void InitializeLevel(int level)
+    public void InitializeLevel(int level = -1)
     {
-        currentLevelIndex = level;
-        FindObjectOfType<DemoController>().InitializeGamePlay(levels[level]);
+        if(level > -1)
+        {
+            currentLevelIndex = level;
+        }
+        FindObjectOfType<DemoController>().InitializeGamePlay(levels[currentLevelIndex]);
     }
 
     public int GetCurrentActiveLevel()
@@ -44,7 +47,14 @@ public class LevelsManager : MonoBehaviour
 
     public List<int> GetLevelStars()
     {
+        CheckAndFillLevelStars();
         return levelStars;
+    }
+
+    public int GetCurrentLevelStar()
+    {
+        CheckAndFillLevelStars();
+        return levelStars[currentLevelIndex];
     }
 
     public void SetLevelStar(int level, int star)

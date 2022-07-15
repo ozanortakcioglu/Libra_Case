@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine.UI;
 using System;
+using DG.Tweening;
 
 public enum PanelNames
 {
     MainMenu,
-    InGame
+    InGame,
+    EndPanel,
 }
 
 [System.Serializable]
@@ -34,6 +37,9 @@ public class UIManager : MonoBehaviour
     [Header("IN GAME PANEL ITEMS")]
     public TMPro.TMP_Text levelText;
     public TMPro.TMP_Text bombCount;
+    [Header("LEVEL END PANEL")]
+    public TMPro.TMP_Text levelEndHeadText;
+    public GameObject[] levelEndStars;
 
 
     public static UIManager Instance;
@@ -60,6 +66,17 @@ public class UIManager : MonoBehaviour
 
     #region Custom Events
 
+    public void RestartLevel()
+    {
+        LevelsManager.Instance.InitializeLevel();
+        OpenPanel(PanelNames.InGame, true);
+    }
+
+    public void BackToMain()
+    {
+        FindObjectOfType<DemoController>().ClearLevel();
+        OpenPanel(PanelNames.MainMenu, true);
+    }
 
     private void SetupLevelContentUI()
     {
@@ -71,6 +88,38 @@ public class UIManager : MonoBehaviour
             var go = Instantiate(levelContentUIPrefab, scrollViewContent);
             go.GetComponent<MainMenuLevelUI>().InitializeUI(i);
             mainManuLevels.Add(go.GetComponent<MainMenuLevelUI>());
+        }
+    }
+
+    public void SetupLevelEndPanel(int starCount = 0)
+    {
+        for (int i = 0; i < levelEndStars.Length; i++)
+        {
+            levelEndStars[i].SetActive(true);
+            levelEndStars[i].transform.localScale = Vector3.zero;
+        }
+
+        if (starCount == 0)
+        {
+            //lose
+            levelEndHeadText.text = "GAMEOVER!";
+        }
+        else
+        {
+            levelEndHeadText.text = "CONGRATS!";
+
+            if (starCount > 3)
+                starCount = 3;
+
+            for (int i = 0; i < starCount; i++)
+            {
+                levelEndStars[i].transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack).SetDelay(0.2f * i);
+            }
+
+            var oldStarLevel = LevelsManager.Instance.GetCurrentLevelStar();
+            if(oldStarLevel < starCount)
+                LevelsManager.Instance.SetLevelStar(LevelsManager.Instance.GetCurrentActiveLevel(), starCount);
+
         }
     }
 

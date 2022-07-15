@@ -50,18 +50,20 @@ public class MainMenuLevelUI : MonoBehaviour
             var max = lockedSlider.maxValue;
             var starCountBeforeThisLevel = LevelsManager.Instance.GetStarCountBeforeALevel(level);
 
-            if (starCountBeforeThisLevel < max)
+            if (starCountBeforeThisLevel < max || !isLastActive)
             {
                 lockedSlider.gameObject.SetActive(true);
                 lockedSlider.value = starCountBeforeThisLevel;
                 sliderText.text = starCountBeforeThisLevel + "/" + max;
 
                 lockedButton.SetActive(true);
+                playButton.SetActive(false);
             }
             else
             {
                 lockedSlider.gameObject.SetActive(false);
                 lockedButton.SetActive(false);
+                playButton.SetActive(true);
             }
         }
         else
@@ -70,10 +72,12 @@ public class MainMenuLevelUI : MonoBehaviour
             if (isLastActive)
             {
                 lockedButton.SetActive(false);
+                playButton.SetActive(true);
             }
             else
             {
                 playButton.SetActive(false);
+                lockedButton.SetActive(true);
             }
         }
     }

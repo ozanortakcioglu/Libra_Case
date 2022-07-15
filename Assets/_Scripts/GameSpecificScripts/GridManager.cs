@@ -69,7 +69,7 @@ public class GridManager : MonoBehaviour
 
     public int GetMinBombCount()
     {
-        // yaklaşım 1: bütün gridlere bomba yerleştir. ve kaç adet brick kırabildiğini yesapla. büyükten küçüğe sırala ve ve brickleri listeden sil kalanlara 1 adet ekle ve sonuç dön - hala sorunlar var 1010101 durumu gibi
+        // yaklaşım 1: bütün gridlere bomba yerleştir. ve kaç adet brick kırabildiğini yesapla. büyükten küçüğe sırala ve brickleri listeden sil - hala sorunlar var 1010101 durumu gibi
         // yaklaşım 2: bricklerin birbirleri ile uzaklık ilişkisine bak, eğer 1.1 > ve < 2.1 ise ilişki vardır ve 1 bomba ile patlatılabilir. -Arası doluysa ?
 
         #region 1
@@ -225,6 +225,19 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    public void DeleteGrid()
+    {
+        if (grid == null)
+            return;
+
+        for (int y = 0; y < levelInfo.height; y++)
+        {
+            for (int x = 0; x < levelInfo.width; x++)
+            {
+                Destroy(grid[x, y]);
+            }
+        }
+    }
     public GridCell GetGridCell(Vector2Int gridPos)
     {
         return grid[gridPos.x, gridPos.y].GetComponent<GridCell>();
