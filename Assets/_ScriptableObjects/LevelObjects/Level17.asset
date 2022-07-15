@@ -12,10 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 134217fe06b213a46bb7360c64fdc387, type: 3}
   m_Name: Level17
   m_EditorClassIdentifier: 
-  width: 4
-  height: 4
+  width: 7
+  height: 8
   brickPos:
   - {x: 0, y: 0}
-  - {x: 2, y: 0}
-  - {x: 3, y: 0}
-  - {x: 3, y: 2}
+  - {x: 2, y: 1}
+  - {x: 5, y: 1}
+  - {x: 5, y: 2}
+  - {x: 2, y: 3}
+  - {x: 4, y: 3}
+  - {x: 5, y: 3}
+  - {x: 6, y: 3}
+  - {x: 0, y: 4}
+  - {x: 4, y: 4}
+  - {x: 1, y: 7}
+  - {x: 2, y: 7}

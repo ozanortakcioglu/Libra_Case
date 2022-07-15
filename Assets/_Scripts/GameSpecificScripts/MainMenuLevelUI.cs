@@ -54,6 +54,8 @@ public class MainMenuLevelUI : MonoBehaviour
             {
                 lockedSlider.gameObject.SetActive(true);
                 lockedSlider.value = starCountBeforeThisLevel;
+                if (starCountBeforeThisLevel > max)
+                    starCountBeforeThisLevel = (int)max;
                 sliderText.text = starCountBeforeThisLevel + "/" + max;
 
                 lockedButton.SetActive(true);
