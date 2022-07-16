@@ -114,6 +114,10 @@ public class GridManager : MonoBehaviour
                 }
             }
 
+            //break loop if there is no related bricks
+            if (max == 1)
+                break;
+
             //delete bricks
             foreach (var item in maxNeighborBricks)
             {
@@ -126,7 +130,8 @@ public class GridManager : MonoBehaviour
                 break;
 
         }
-
+        //add single bricks
+        minCount += bricks.Count;
         #endregion
         #region 2
         //var brickCount = levelInfo.brickPos.Length;
