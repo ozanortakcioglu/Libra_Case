@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DemoController : MonoBehaviour
 {
@@ -62,7 +60,7 @@ public class DemoController : MonoBehaviour
                         starCount = 1;
                     else
                         starCount = 0;
-                    UIManager.Instance.OpenPanel(PanelNames.EndPanel, true, 0.5f);
+                    UIManager.Instance.OpenPanel(PanelNames.EndPanel, true, 1f);
                 }
                 else
                 {
@@ -71,7 +69,7 @@ public class DemoController : MonoBehaviour
                         gridManager.ExplodeAllBombs();
                         controlsEnabled = false;
                         starCount = totalBombCount + 1;
-                        UIManager.Instance.OpenPanel(PanelNames.EndPanel, true, 0.5f);
+                        UIManager.Instance.OpenPanel(PanelNames.EndPanel, true, 1f);
                     }
                 }
             }

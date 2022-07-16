@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using RotaryHeart.Lib.SerializableDictionary;
-using TMPro;
-using System.Collections;
+
 
 public enum EffectTrigger
 {

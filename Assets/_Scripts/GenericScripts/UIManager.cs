@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine.UI;
@@ -158,7 +157,7 @@ public class UIManager : MonoBehaviour
 
             for (int i = 0; i < starCount; i++)
             {
-                levelEndStars[i].transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack).SetDelay(0.2f * i);
+                levelEndStars[i].transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack).SetDelay(0.2f * (i + 1));
             }
 
             var oldStarLevel = LevelsManager.Instance.GetCurrentLevelStar();

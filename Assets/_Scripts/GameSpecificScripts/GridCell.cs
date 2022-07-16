@@ -39,7 +39,7 @@ public class GridCell : MonoBehaviour
     public void ExplodeBomb()
     {
         //effect
-        EffectsManager.Instance.PlayEffect(EffectTrigger.ExplodeBomb, transform.position, Vector3.zero, Vector3.one, null);
+        EffectsManager.Instance.PlayEffect(EffectTrigger.ExplodeBomb, bombSprite.transform.position, Vector3.zero, Vector3.one, null);
         bombSprite.gameObject.SetActive(false);
     }
 
