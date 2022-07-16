@@ -39,6 +39,7 @@ public class GridCell : MonoBehaviour
     public void ExplodeBomb()
     {
         //effect
+        EffectsManager.Instance.PlayEffect(EffectTrigger.ExplodeBomb, transform.position, Vector3.zero, Vector3.one, null);
         bombSprite.gameObject.SetActive(false);
     }
 
@@ -49,7 +50,7 @@ public class GridCell : MonoBehaviour
 
         isBrick = false;
 
-        brickSprite.gameObject.SetActive(false);
+        brickSprite.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack);
         thickSprite.gameObject.SetActive(true);
     }
 

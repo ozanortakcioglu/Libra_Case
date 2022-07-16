@@ -70,12 +70,16 @@ public class UIManager : MonoBehaviour
     {
         LevelsManager.Instance.InitializeLevel();
         OpenPanel(PanelNames.InGame, true);
+        SoundManager.Instance.PlaySound(SoundTrigger.ButtonClick);
+
     }
 
     public void BackToMain()
     {
         FindObjectOfType<DemoController>().ClearLevel();
         OpenPanel(PanelNames.MainMenu, true);
+        SoundManager.Instance.PlaySound(SoundTrigger.ButtonClick);
+
     }
 
     private void SetupLevelContentUI()
@@ -140,10 +144,14 @@ public class UIManager : MonoBehaviour
         {
             //lose
             levelEndHeadText.text = "GAMEOVER!";
+            SoundManager.Instance.PlaySound(SoundTrigger.Lose);
+
         }
         else
         {
             levelEndHeadText.text = "CONGRATS!";
+            SoundManager.Instance.PlaySound(SoundTrigger.Win);
+
 
             if (starCount > 3)
                 starCount = 3;

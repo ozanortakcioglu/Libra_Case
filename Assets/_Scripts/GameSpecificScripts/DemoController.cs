@@ -52,7 +52,7 @@ public class DemoController : MonoBehaviour
             {
                 totalBombCount--;
                 UIManager.Instance.SetBombCount(totalBombCount);
-
+                SoundManager.Instance.PlaySound(SoundTrigger.PlaceBomb);
                 if(totalBombCount == 0)
                 {
                     gridManager.ExplodeAllBombs();

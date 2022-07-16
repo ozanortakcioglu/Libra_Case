@@ -3,7 +3,11 @@ using RotaryHeart.Lib.SerializableDictionary;
 
 public enum SoundTrigger
 {
-    Sound1,
+    PlaceBomb,
+    Explosion,
+    Win,
+    Lose,
+    ButtonClick,
 }
 
 [System.Serializable]

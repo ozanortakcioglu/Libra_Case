@@ -24,6 +24,8 @@ public class MainMenuLevelUI : MonoBehaviour
         {
             LevelsManager.Instance.InitializeLevel(level);
             UIManager.Instance.OpenPanel(PanelNames.InGame, true);
+            SoundManager.Instance.PlaySound(SoundTrigger.ButtonClick);
+
         });
 
 

@@ -68,6 +68,8 @@ public class GridManager : MonoBehaviour
 
     public void ExplodeAllBombs()
     {
+        SoundManager.Instance.PlaySound(SoundTrigger.Explosion);
+
         foreach (var item in bombPositions)
         {
             GetGridCell(item).ExplodeBomb();
